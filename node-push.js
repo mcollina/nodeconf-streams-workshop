@@ -23,6 +23,7 @@ class PushStream extends Readable {
   }
 
   _read() {
+    this.timer.refresh()
   }
 
   _destroy(err, cb) {
