@@ -2,23 +2,26 @@ import { fibGen } from './fib.js'
 
 const f = fibGen();
 
-let controller;
 const readable = new ReadableStream({
-  start(c) {
-    controller = c;
+  start(controller) {
+    const timer = setTimeout(() => {
+      f.next().then(({ value, done }) => {
+        if (done) {
+          controller.close();
+        } else {
+          controller.enqueue(value);
+          timer.refresh();
+        }
+      })
+    }, 10);
+  },
+  cancel() {
+    clearTimeout(timer);
+    f.return();
   }
 });
 
-const timer = setTimeout(() => {
-  f.next().then(({ value, done }) => {
-    if (done) {
-      controller.close();
-    } else {
-      controller.enqueue(value);
-      timer.refresh();
-    }
-  })
-}, 10);
+
 
 for await (const chunk of readable) {
   console.log(chunk);
