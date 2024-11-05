@@ -4,19 +4,24 @@ const f = fibGen();
 
 const readable = new ReadableStream({
   start(controller) {
-    const timer = setTimeout(() => {
+    this.timer = setTimeout(() => {
       f.next().then(({ value, done }) => {
         if (done) {
           controller.close();
         } else {
           controller.enqueue(value);
-          timer.refresh();
+          if (controller.desiredSize > 0) {
+            this.timer.refresh();
+          }
         }
       })
     }, 10);
   },
+  pull(controller) {
+    this.timer.refresh();
+  },
   cancel() {
-    clearTimeout(timer);
+    clearTimeout(this.timer);
     f.return();
   }
 });
