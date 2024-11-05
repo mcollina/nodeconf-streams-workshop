@@ -13,23 +13,25 @@ Create a fibonacci generator using a readable stream.
 The stream should emit the next number in the fibonacci sequence every time it is read from.
 Make it so that it arrives at a limit (100 by default), and then reverses back to the start of the sequence;
 when it reaches zero, it should start again to the limit and never end until is destroyed.
-Make it so that the stream can be paused and resumed.
+Bonus task: Make it so that the stream can be paused and resumed.
 
 Implement this stream in both Node.js streams and Web Streams.
 
 ## Excersise 2
 
 Implement a push variation and a pull variation for both Node.js and web streams.
-For the push variation, the stream should produce a new number every 100ms.
+For the push variation, the stream should produce a new number every 10ms.
 
 ## Excersise 3
 
 Implement backpressure management, so that no more than 16 numbers are in the stream at any given time.
+Ideally, this would avoid buffering at all.
 
 ## Excersise 4
 
 Implement a transform stream that converts the numbers to byte arrays.
-The resulting readable should never buffer more than 16 numbers (whatever bytes there are).
+The resulting readable should never buffer more than 16 numbers (whatever bytes there are)
+but, again, ideally this would avoid buffering at all.
 
 ## Excersise 5
 
@@ -38,5 +40,5 @@ and pipe the Web Readable Stream into the Node.js Writable Stream.
 
 ## Excersise 6
 
-Make the Readable stream cancellable (do it for both the push and pull versions).
+Bonus task: Make the Readable stream cancellable (do it for both the push and pull versions).
 
